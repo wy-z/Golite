@@ -1,2 +1,2 @@
 # golite
-A Golang plugin collection for SublimeText 3.
+Add autocompletion, linting and IDE features for Golang to Sublime Text 3.
