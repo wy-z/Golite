@@ -32,7 +32,7 @@ class Gometalinter(Linter):
             if settings.get('lint_mode') == 'background':
                 result = self._live_lint(cmd, code)
             else:
-                result = self._on_save_lint(cmd, code)
+                result = self._on_save_lint(cmd)
         finally:
             self.linting = False
         return result
