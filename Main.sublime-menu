@@ -1,0 +1,45 @@
+[
+  {
+    "caption": "Preferences",
+    "children": [
+      {
+        "caption": "Package Settings",
+        "children": [
+          {
+            "caption": "Golite",
+            "children": [
+              {
+                "args": {
+                  "file": "${packages}/Golite/Golite.sublime-settings"
+                },
+                "caption": "Settings – Default",
+                "command": "open_file"
+              },
+              {
+                "args": {
+                  "file": "${packages}/User/Golite.sublime-settings"
+                },
+                "caption": "Settings – User",
+                "command": "open_file"
+              },
+              {
+                "caption": "-"
+              },
+              {
+                "args": {
+                  "file": "${packages}/Golite/README.md"
+                },
+                "caption": "Read Me",
+                "command": "open_file"
+              }
+            ]
+          }
+        ],
+        "id": "package-settings",
+        "mnemonic": "P"
+      }
+    ],
+    "id": "preferences",
+    "mnemonic": "n"
+  }
+]

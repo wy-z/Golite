@@ -1,0 +1,6 @@
+{
+  "formatter": "both", // ["goimports", "gofmt", "both"]
+  "gofmt_simplified": false, // gofmt -s
+  "gocode_inhibit_word_completions": true,
+  "gocode_inhibit_explicit_completions": false
+}
