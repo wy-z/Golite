@@ -88,4 +88,8 @@ class GoliteFormatListener(sublime_plugin.EventListener):
     def on_pre_save(self, view):
         if not view.match_selector(0, "source.go"):
             return
+
+        settings = sublime.load_settings("Golite.sublime-settings")
+        if not settings.get("format_on_save"):
+            return
         view.run_command('golite_format')
