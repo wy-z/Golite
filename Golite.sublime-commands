@@ -2,5 +2,9 @@
     {
         "caption": "Golite: Format",
         "command": "golite_format"
+    },
+    {
+        "caption": "Golite: Godef",
+        "command": "golite_godef"
     }
 ]

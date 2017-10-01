@@ -19,9 +19,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import sublime, sublime_plugin
+import os
 import subprocess
+
 import golangconfig
+import sublime
+import sublime_plugin
+
+from . import utils
 
 
 # go to balanced pair, e.g.:
@@ -119,7 +124,7 @@ class GocodeListener(sublime_plugin.EventListener):
         if not view.match_selector(loc, "source.go"):
             return
         settings = sublime.load_settings("Golite.sublime-settings")
-        gocode_path, env = golangconfig.subprocess_info(
+        gocode_path, _ = golangconfig.subprocess_info(
             "gocode", ['GOPATH'], view=view)
 
         src = view.substr(sublime.Region(0, view.size()))
@@ -128,7 +133,9 @@ class GocodeListener(sublime_plugin.EventListener):
         proc = subprocess.Popen(
             [gocode_path, "-f=csv", "autocomplete", filename, cloc],
             stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE)
+            stdout=subprocess.PIPE,
+            env=os.environ.copy(),
+            startupinfo=utils.get_startupinfo())
         out = proc.communicate(src.encode())[0].decode()
 
         result = []

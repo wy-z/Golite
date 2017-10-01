@@ -1,9 +1,17 @@
-import sublime, sublime_plugin
-import tempfile, subprocess
+import os
+import subprocess
+
 import golangconfig
+import sublime
+import sublime_plugin
+
+from . import utils
 
 
 class GoliteFormatCommand(sublime_plugin.TextCommand):
+    def is_enabled(self):
+        return self.view.match_selector(0, "source.go")
+
     def run(self, edit):
         settings = sublime.load_settings("Golite.sublime-settings")
         code = self.view.substr(sublime.Region(0, self.view.size()))
@@ -20,7 +28,7 @@ class GoliteFormatCommand(sublime_plugin.TextCommand):
                     print(
                         "[golite] failed to format '%s' with 'goimports':\n%s"
                         % (self.view.file_name(), e))
-            if not formatted and (formatter in ["gofmt", "both"]):
+            if not formatted and formatter in ["gofmt", "both"]:
                 args = []
                 if settings.get("gofmt_simplified", False):
                     args = ["-s"]
@@ -50,7 +58,7 @@ class GoliteFormatCommand(sublime_plugin.TextCommand):
         Raises:
             RuntimeError -- raise runtimeError when processing failed
         """
-        formatter_path, env = golangconfig.subprocess_info(
+        formatter_path, _ = golangconfig.subprocess_info(
             formatter, ['GOPATH'], view=self.view)
 
         args.insert(0, formatter_path)
@@ -59,6 +67,8 @@ class GoliteFormatCommand(sublime_plugin.TextCommand):
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            env=os.environ.copy(),
+            startupinfo=utils.get_startupinfo(),
             shell=True)
         out, err = proc.communicate(input=code.encode("utf-8"))
         if proc.returncode != 0:
@@ -72,9 +82,6 @@ class GoliteFormatCommand(sublime_plugin.TextCommand):
                 self.view.set_read_only(False)
                 self.view.replace(edit, region, out_str)
         return out_str
-
-    def is_enabled(self):
-        return self.view.match_selector(0, "source.go")
 
 
 class GoliteFormatListener(sublime_plugin.EventListener):
