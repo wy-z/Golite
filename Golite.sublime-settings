@@ -1,7 +1,7 @@
 {
-    "formatter": "both", // ["goimports", "gofmt", "both"]
-    "format_on_save": true,
+    "format_mode": "both", // ["goimports", "gofmt", "both"]
     "godef_mode": "both", // ["godef", "guru", "both"]
+    "format_on_save": true,
     "gofmt_simplified": false, // gofmt -s
     "gocode_enabled": true,
     "gocode_inhibit_word_completions": true,

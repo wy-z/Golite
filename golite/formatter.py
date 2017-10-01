@@ -18,9 +18,9 @@ class GoliteFormatCommand(sublime_plugin.TextCommand):
         try:
             self.view.set_read_only(True)
 
-            formatter = settings.get("formatter", [])
+            mode = settings.get("format_mode", "both")
             formatted = False
-            if formatter in ["goimports", "both"]:
+            if mode in ["goimports", "both"]:
                 try:
                     code = self.fromat("goimports", code, edit)
                     formatted = True
@@ -28,7 +28,7 @@ class GoliteFormatCommand(sublime_plugin.TextCommand):
                     print(
                         "[golite] failed to format '%s' with 'goimports':\n%s"
                         % (self.view.file_name(), e))
-            if not formatted and formatter in ["gofmt", "both"]:
+            if not formatted and mode in ["gofmt", "both"]:
                 args = []
                 if settings.get("gofmt_simplified", False):
                     args = ["-s"]
