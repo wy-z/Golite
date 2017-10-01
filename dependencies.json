@@ -2,8 +2,7 @@
     "*": {
         "*": [
             "shellenv",
-            "golangconfig",
-            "SublimeLinter"
+            "golangconfig"
         ]
     }
 }
