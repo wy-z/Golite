@@ -26,6 +26,7 @@ class Gometalinter(Linter):
         if self.linting and pre_code == code:
             return
         self.linting = True
+        self.pre_code = code
 
         result = ''
         try:
