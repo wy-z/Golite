@@ -59,7 +59,7 @@ class GoliteFormatCommand(sublime_plugin.TextCommand):
             RuntimeError -- raise runtimeError when processing failed
         """
         formatter_path, _ = golangconfig.subprocess_info(
-            formatter, ['GOPATH'], view=self.view)
+            formatter, [], view=self.view)
 
         args.insert(0, formatter_path)
         proc = subprocess.Popen(

@@ -6,5 +6,9 @@
     {
         "caption": "Golite: Godef",
         "command": "golite_godef"
+    },
+    {
+        "caption": "Golite: Install Go Tools",
+        "command": "golite_install"
     }
 ]

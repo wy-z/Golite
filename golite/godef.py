@@ -36,7 +36,7 @@ class GoliteGodefCommand(sublime_plugin.TextCommand):
         if mode in ["godef", "both"]:
             try:
                 godef_path, _ = golangconfig.subprocess_info(
-                    "godef", ['GOPATH'], view=self.view)
+                    "godef", [], view=self.view)
                 args = [godef_path, "-f", filename, "-o", str(offset)]
 
                 proc = subprocess.Popen(
@@ -55,7 +55,7 @@ class GoliteGodefCommand(sublime_plugin.TextCommand):
                       e)
         if position == "" and mode in ["guru", "both"]:
             guru_path, _ = golangconfig.subprocess_info(
-                "guru", ['GOPATH'], view=self.view)
+                "guru", [], view=self.view)
             args = [
                 guru_path, "-json", 'definition', filename + ":#" + str(offset)
             ]
