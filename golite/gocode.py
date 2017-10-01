@@ -124,6 +124,8 @@ class GocodeListener(sublime_plugin.EventListener):
         if not view.match_selector(loc, "source.go"):
             return
         settings = sublime.load_settings("Golite.sublime-settings")
+        if not settings.get("gocode_enabled", True):
+            return
         gocode_path, _ = golangconfig.subprocess_info(
             "gocode", ['GOPATH'], view=view)
 
