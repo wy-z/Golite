@@ -8,6 +8,10 @@
         "command": "golite_godef"
     },
     {
+        "caption": "Golite: Rename",
+        "command": "golite_rename"
+    },
+    {
         "caption": "Golite: Install Go Tools",
         "command": "golite_install"
     },

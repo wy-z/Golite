@@ -11,6 +11,7 @@ go_tools = {
     "goimports": "golang.org/x/tools/cmd/goimports",
     "godef": "github.com/rogpeppe/godef",
     "gometalinter": "github.com/alecthomas/gometalinter",
+    "gorename": "golang.org/x/tools/cmd/gorename",
 }
 
 

@@ -5,6 +5,7 @@ from .golite.gocode import GocodeListener
 from .golite.godef import GoliteGodefCommand
 from .golite.installer import GoliteDoctorCommand, GoliteInstallCommand
 from .golite.linter import Gometalinter
+from .golite.rename import GoliteRenameCommand
 
 
 def plugin_loaded():
