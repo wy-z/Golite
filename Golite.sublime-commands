@@ -10,5 +10,9 @@
     {
         "caption": "Golite: Install Go Tools",
         "command": "golite_install"
+    },
+    {
+        "caption": "Golite: Doctor - Audit Installation",
+        "command": "golite_doctor"
     }
 ]
