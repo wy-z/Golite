@@ -50,6 +50,7 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
                     'Open Documentation'):
                 sublime.run_command('open_url',
                                     {'url': 'https://github.com/wy-z/Golite'})
+            raise e
         print("[golite] go tools installed")
 
     def run_cmd(self, args, timeout=60):
