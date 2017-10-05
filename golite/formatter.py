@@ -1,4 +1,3 @@
-import os
 import subprocess
 
 import sublime
@@ -57,15 +56,13 @@ class GoliteFormatCommand(sublime_plugin.TextCommand):
         Raises:
             RuntimeError -- raise runtimeError when processing failed
         """
-        formatter_path = utils.executable_path(formatter, view=self.view)
-
-        args.insert(0, formatter_path)
+        args.insert(0, formatter)
         proc = subprocess.Popen(
             args,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            env=os.environ.copy(),
+            env=utils.get_env(),
             startupinfo=utils.get_startupinfo(),
             shell=True)
         out, err = proc.communicate(input=code.encode("utf-8"))

@@ -1,4 +1,3 @@
-import os
 import subprocess
 
 import sublime
@@ -32,16 +31,15 @@ class GoliteRenameCommand(sublime_plugin.TextCommand):
         string_before = view.substr(select_before)
         offset = len(string_before.encode("utf-8"))
 
-        rename_path = utils.executable_path("gorename", view=self.view)
         args = [
-            rename_path, "-offset", "{file}:#{offset}".format(
+            "gorename", "-offset", "{file}:#{offset}".format(
                 file=filename, offset=offset), "-to", name, "-v"
         ]
         proc = subprocess.Popen(
             args,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            env=os.environ.copy(),
+            env=utils.get_env(),
             startupinfo=utils.get_startupinfo())
         out, err = proc.communicate()
         if proc.returncode != 0:

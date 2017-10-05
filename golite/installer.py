@@ -78,7 +78,7 @@ class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
         msg = "[%s] Golang installed"
         installed = True
         try:
-            utils.executable_path("go", window=sublime.active_window())
+            utils.which("go")
         except EnvironmentError:
             installed = False
         msgs.append(msg % ("x" if installed else "  "))
@@ -88,7 +88,7 @@ class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
         installed = True
         for tool in go_tools.keys():
             try:
-                utils.executable_path("go", window=sublime.active_window())
+                print(utils.which(tool))
             except EnvironmentError:
                 installed = False
                 break

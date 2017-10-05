@@ -1,5 +1,4 @@
 import json
-import os
 import subprocess
 
 import sublime
@@ -34,14 +33,12 @@ class GoliteGodefCommand(sublime_plugin.TextCommand):
         mode = settings.get("godef_mode", "both")
         if mode in ["godef", "both"]:
             try:
-                godef_path = utils.executable_path("godef", view=self.view)
-                args = [godef_path, "-f", filename, "-o", str(offset)]
-
+                args = ["godef", "-f", filename, "-o", str(offset)]
                 proc = subprocess.Popen(
                     args,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
-                    env=os.environ.copy(),
+                    env=utils.get_env(),
                     startupinfo=utils.get_startupinfo())
                 out, err = proc.communicate()
                 if proc.returncode != 0:
@@ -52,16 +49,14 @@ class GoliteGodefCommand(sublime_plugin.TextCommand):
                 print("[golite] failed to go to definition with 'godef':\n%s" %
                       e)
         if position == "" and mode in ["guru", "both"]:
-            guru_path = utils.executable_path("guru", view=self.view)
             args = [
-                guru_path, "-json", 'definition', filename + ":#" + str(offset)
+                "guru", "-json", 'definition', filename + ":#" + str(offset)
             ]
-
             proc = subprocess.Popen(
                 args,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                env=os.environ.copy(),
+                env=utils.get_env(),
                 startupinfo=utils.get_startupinfo())
             out, err = proc.communicate()
             if proc.returncode != 0:

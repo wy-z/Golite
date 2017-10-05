@@ -19,7 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import os
 import subprocess
 
 import sublime
@@ -125,16 +124,15 @@ class GocodeListener(sublime_plugin.EventListener):
         settings = sublime.load_settings("Golite.sublime-settings")
         if not settings.get("gocode_enabled", True):
             return
-        gocode_path = utils.executable_path("gocode", view=view)
 
         src = view.substr(sublime.Region(0, view.size()))
         filename = view.file_name()
         cloc = "c{0}".format(loc)
         proc = subprocess.Popen(
-            [gocode_path, "-f=csv", "autocomplete", filename, cloc],
+            ["gocode", "-f=csv", "autocomplete", filename, cloc],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            env=os.environ.copy(),
+            env=utils.get_env(),
             startupinfo=utils.get_startupinfo())
         out = proc.communicate(src.encode())[0].decode()
 

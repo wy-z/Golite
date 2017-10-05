@@ -1,7 +1,11 @@
 import os
 import subprocess
+import shellenv
 
-import golangconfig
+
+def get_env():
+    _, env = shellenv.get_env()
+    return env
 
 
 def get_startupinfo():
@@ -12,9 +16,9 @@ def get_startupinfo():
     return startupinfo
 
 
-def executable_path(executable_name, view=None, window=None):
-    exec_path, _ = golangconfig.executable_path(
-        executable_name, view=view, window=window)
-    if not exec_path:
-        raise EnvironmentError("command '%s' not found" % exec_path)
+def which(command):
+    try:
+        exec_path = subprocess.check_output(["which", command], env=get_env())
+    except subprocess.CalledProcessError as e:
+        raise EnvironmentError(e)
     return exec_path
