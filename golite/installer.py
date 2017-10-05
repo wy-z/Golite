@@ -32,17 +32,24 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
 
         print("[golite] start installing go tools: [%s]" %
               ','.join(go_tools.keys()))
-        for tool in go_tools:
-            args = ["go", "get", go_tools[tool]]
-            if auto_update:
-                args.insert(2, "-u")
-            self.run_cmd(args, timeout=60)
-
-            if tool == "gometalinter":
-                args = ["gometalinter", "--install"]
+        try:
+            for tool in go_tools:
+                args = ["go", "get", go_tools[tool]]
                 if auto_update:
-                    args.append("--update")
-                self.run_cmd(args, timeout=300)
+                    args.insert(2, "-u")
+                self.run_cmd(args, timeout=60)
+
+                if tool == "gometalinter":
+                    args = ["gometalinter", "--install"]
+                    if auto_update:
+                        args.append("--update")
+                    self.run_cmd(args, timeout=300)
+        except Exception as e:
+            if sublime.ok_cancel_dialog(
+                    "[Golite] Failed to install go tools\n%s" % e,
+                    'Open Documentation'):
+                sublime.run_command('open_url',
+                                    {'url': 'https://github.com/wy-z/Golite'})
         print("[golite] go tools installed")
 
     def run_cmd(self, args, timeout=60):
@@ -89,7 +96,7 @@ class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
         msg = "[%s] Sublimelinter installed"
         installed = True
         try:
-            from SublimeLinter.lint import Linter
+            import SublimeLinter.lint
         except ImportError:
             installed = False
         msgs.append(msg % ("x" if installed else "  "))
