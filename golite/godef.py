@@ -2,7 +2,6 @@ import json
 import os
 import subprocess
 
-import golangconfig
 import sublime
 import sublime_plugin
 
@@ -35,8 +34,7 @@ class GoliteGodefCommand(sublime_plugin.TextCommand):
         mode = settings.get("godef_mode", "both")
         if mode in ["godef", "both"]:
             try:
-                godef_path, _ = golangconfig.subprocess_info(
-                    "godef", [], view=self.view)
+                godef_path = utils.executable_path("godef", view=self.view)
                 args = [godef_path, "-f", filename, "-o", str(offset)]
 
                 proc = subprocess.Popen(
@@ -54,8 +52,7 @@ class GoliteGodefCommand(sublime_plugin.TextCommand):
                 print("[golite] failed to go to definition with 'godef':\n%s" %
                       e)
         if position == "" and mode in ["guru", "both"]:
-            guru_path, _ = golangconfig.subprocess_info(
-                "guru", [], view=self.view)
+            guru_path = utils.executable_path("guru", view=self.view)
             args = [
                 guru_path, "-json", 'definition', filename + ":#" + str(offset)
             ]

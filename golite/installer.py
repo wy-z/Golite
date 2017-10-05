@@ -2,7 +2,6 @@ import subprocess
 
 import sublime
 import sublime_plugin
-import golangconfig
 
 
 class GoliteInstallCommand(sublime_plugin.ApplicationCommand):

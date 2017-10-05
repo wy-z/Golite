@@ -1,6 +1,5 @@
 import os
 
-import golangconfig
 from SublimeLinter.lint import Linter, util
 from SublimeLinter.lint.persist import settings
 
