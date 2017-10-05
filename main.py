@@ -24,7 +24,7 @@ def check_prompt():
 
     # set 'auto_update_go_tools'
     return_code = sublime.yes_no_cancel_dialog(
-        "[Golite] Do you want to auto update go tools?")
+        "[Golite] Do you want to update go tools automatically?")
     if return_code == sublime.DIALOG_YES:
         settings.set("auto_update_go_tools", True)
     elif return_code == sublime.DIALOG_NO:
