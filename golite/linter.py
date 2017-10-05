@@ -23,7 +23,7 @@ class Gometalinter(Linter):
         self.pre_code = ""
 
     def run(self, cmd, code):
-        if self.linting and pre_code == code:
+        if self.linting and self.pre_code == code:
             return
         self.linting = True
         self.pre_code = code
