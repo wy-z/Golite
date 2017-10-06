@@ -33,26 +33,38 @@ class GoliteRenameCommand(sublime_plugin.TextCommand):
 
         args = [
             "gorename", "-offset", "{file}:#{offset}".format(
-                file=filename, offset=offset), "-to", name, "-v"
+                file=filename, offset=offset), "-to", name
         ]
+
         proc = subprocess.Popen(
-            args,
+            args + ["-d"],
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             env=utils.get_env(),
             startupinfo=utils.get_startupinfo())
-        out, err = proc.communicate()
-        if proc.returncode != 0:
-            raise RuntimeError(err.decode("utf-8"))
+        out, _ = proc.communicate()
+        buf_out = out
 
-        panel = self.view.window().create_output_panel('golite_rename')
-        panel.set_scratch(True)
-        # TODO: gorename isn't emitting line numbers, so to get clickable
-        # referenced we'd need to process each line to append ':N' to make the
-        # sublime regex work properly (line number is a required capture group).
-        panel.settings().set("result_file_regex", "^\t(.*\.go)$")
-        panel.run_command("select_all")
-        panel.run_command("right_delete")
-        panel.run_command('append', {'characters': err})
-        self.view.window().run_command("show_panel",
-                                       {"panel": "output.golite_rename"})
+        proc = subprocess.Popen(
+            args + ["-v"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            env=utils.get_env(),
+            startupinfo=utils.get_startupinfo())
+        out, _ = proc.communicate()
+        if proc.returncode != 0:
+            print("[golite] failed to rename '%s':\n%s" %
+                  (name, out.decode("utf-8")))
+            buf_out = out
+
+        buf_name = "Rename Result"
+        buf = self.view.window().new_file()
+        buf.set_name(buf_name)
+        buf.set_scratch(True)
+        buf.set_syntax_file("Packages/Go/Go.sublime-syntax")
+        buf.settings().set("result_file_regex", "^\t(.*\.go)$")
+        buf.run_command("select_all")
+        buf.run_command("right_delete")
+        print(out)
+        buf.run_command('append', {'characters': buf_out.decode("utf-8")})
+        buf.set_read_only(True)
