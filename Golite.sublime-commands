@@ -12,7 +12,7 @@
         "command": "golite_rename"
     },
     {
-        "caption": "Golite: Install Go Tools",
+        "caption": "Golite: Install Dependencies",
         "command": "golite_install"
     },
     {
