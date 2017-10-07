@@ -6,5 +6,5 @@
     "gocode_enabled": true,
     "gocode_inhibit_word_completions": true,
     "gocode_inhibit_explicit_completions": false,
-    "auto_update_go_tools": false
+    "install_cmd_update_go_tools": false
 }

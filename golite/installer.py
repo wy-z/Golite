@@ -29,20 +29,20 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
 
     def install_go_tools(self):
         settings = sublime.load_settings("Golite.sublime-settings")
-        auto_update = settings.get("auto_update_go_tools", False)
+        update_tools = settings.get("install_cmd_update_go_tools", False)
 
         print("[golite] start installing go tools: [%s]" %
               ','.join(go_tools.keys()))
         try:
             for tool in go_tools:
                 args = ["go", "get", go_tools[tool]]
-                if auto_update:
+                if update_tools:
                     args.insert(2, "-u")
                 self.run_cmd(args, timeout=60)
 
                 if tool == "gometalinter":
                     args = ["gometalinter", "--install"]
-                    if auto_update:
+                    if update_tools:
                         args.append("--update")
                     self.run_cmd(args, timeout=300)
         except Exception as e:
