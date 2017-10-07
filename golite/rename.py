@@ -35,6 +35,7 @@ class GoliteRenameCommand(sublime_plugin.TextCommand):
             "gorename", "-offset", "{file}:#{offset}".format(
                 file=filename, offset=offset), "-to", name
         ]
+        utils.show_golite_panel(self.view.window(), "renaming ...")
 
         proc = subprocess.Popen(
             args + ["-d"],
@@ -57,6 +58,7 @@ class GoliteRenameCommand(sublime_plugin.TextCommand):
                   (name, out.decode("utf-8")))
             buf_out = out
 
+        utils.close_golite_panel(self.view.window())
         buf_name = "Rename Result"
         buf = self.view.window().new_file()
         buf.set_name(buf_name)

@@ -30,3 +30,15 @@ def prompt(message):
     if sublime.ok_cancel_dialog(message, 'Open Documentation'):
         sublime.run_command('open_url',
                             {'url': 'https://github.com/wy-z/Golite'})
+
+
+def show_golite_panel(win, message):
+    view = win.create_output_panel("golite_panel")
+    view.set_scratch(True)
+    view.run_command('append', {'characters': message})
+    view.set_read_only(True)
+    win.run_command("show_panel", {"panel": "output.golite_panel"})
+
+
+def close_golite_panel(win):
+    win.destroy_output_panel("golite_panel")
