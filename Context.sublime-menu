@@ -2,5 +2,9 @@
   {
     "caption": "Golite: Godef",
     "command": "golite_godef"
+  },
+  {
+    "caption": "Golite: Rename",
+    "command": "golite_rename"
   }
 ]
