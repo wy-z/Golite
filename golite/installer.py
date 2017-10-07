@@ -47,7 +47,7 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
                     self.run_cmd(args, timeout=300)
         except Exception as e:
             if sublime.ok_cancel_dialog(
-                    "[Golite] Failed to install go tools\n%s" % e,
+                    "[Golite] Failed to install go tools.\n%s" % e,
                     'Open Documentation'):
                 sublime.run_command('open_url',
                                     {'url': 'https://github.com/wy-z/Golite'})
