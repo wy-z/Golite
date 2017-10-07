@@ -25,7 +25,13 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
     """
 
     def run(self):
+        sublime.set_timeout_async(self.install_sublime_linter, 0)
         sublime.set_timeout_async(self.install_go_tools, 0)
+
+    def install_sublime_linter(self):
+        from package_control.package_manager import PackageManager
+        manager = PackageManager()
+        manager.install_package("SublimeLinter")
 
     def install_go_tools(self):
         settings = sublime.load_settings("Golite.sublime-settings")
@@ -72,31 +78,31 @@ class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
 
         # check golang
         msg = "[%s] Golang installed"
-        installed = True
+        result = "√"
         try:
             utils.which("go")
         except EnvironmentError:
-            installed = False
-        msgs.append(msg % ("x" if installed else "  "))
+            result = "×"
+        msgs.append(msg % result)
 
         # check all go tools have been installed
         msg = "[%s] Go tools installed"
-        installed = True
+        result = "√"
         for tool in go_tools.keys():
             try:
                 utils.which(tool)
             except EnvironmentError:
-                installed = False
+                result = "×"
                 break
-        msgs.append(msg % ("x" if installed else "  "))
+        msgs.append(msg % result)
 
         # check sublimelinter
         msg = "[%s] Sublimelinter installed"
-        installed = True
+        result = "√"
         try:
             import SublimeLinter.lint
         except ImportError:
-            installed = False
-        msgs.append(msg % ("x" if installed else "  "))
+            result = "×"
+        msgs.append(msg % result)
 
         utils.prompt('\n'.join(msgs))

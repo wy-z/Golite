@@ -12,3 +12,7 @@ try:
 except ImportError:
     print("""[golite] failed to import 'Gometalinter', please install \
 'Sublimelinter'""")
+
+
+def plugin_loaded():
+    sublime.run_command('golite_install')
