@@ -46,11 +46,7 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
                         args.append("--update")
                     self.run_cmd(args, timeout=300)
         except Exception as e:
-            if sublime.ok_cancel_dialog(
-                    "[Golite] Failed to install go tools.\n%s" % e,
-                    'Open Documentation'):
-                sublime.run_command('open_url',
-                                    {'url': 'https://github.com/wy-z/Golite'})
+            utils.prompt("[Golite] Failed to install go tools.\n%s" % e)
             raise e
         print("[golite] go tools installed")
 
@@ -88,7 +84,7 @@ class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
         installed = True
         for tool in go_tools.keys():
             try:
-                print(utils.which(tool))
+                utils.which(tool)
             except EnvironmentError:
                 installed = False
                 break
@@ -103,7 +99,4 @@ class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
             installed = False
         msgs.append(msg % ("x" if installed else "  "))
 
-        if sublime.ok_cancel_dialog("%s" % '\n'.join(msgs),
-                                    'Open Documentation'):
-            sublime.run_command('open_url',
-                                {'url': 'https://github.com/wy-z/Golite'})
+        utils.prompt('\n'.join(msgs))
