@@ -85,7 +85,7 @@ class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
             result = "×"
         msgs.append(msg % result)
 
-        # check all go tools have been installed
+        # check go tools
         msg = "[%s] Go tools installed"
         result = "√"
         for tool in go_tools.keys():
