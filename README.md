@@ -22,7 +22,7 @@ The *Golite* package is installed by using
 - `Golite: Godef` Go to definition
 - `Golite: Rename` Rename identifier
 - `Golite: Install Dependencies` Install dependencies
-- `Golite: Doctor - Audit Installation` Audits installation for common issues
+- `Golite: Doctor - Audit Installation` Audit installation for common issues
 
 ## Dependencies
 

@@ -64,7 +64,7 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
 class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
     """GoliteDoctorCommand
 
-    Audits installation for common issues
+    Audit installation for common issues
 
     Extends:
         sublime_plugin.ApplicationCommand
