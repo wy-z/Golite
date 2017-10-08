@@ -26,13 +26,13 @@ The *Golite* package is installed by using
 
 ## Dependencies
 
-- [gocode](https://github.com/nsf/gocode)
-- [guru](https://golang.org/x/tools/cmd/guru)
-- [goimports](https://golang.org/x/tools/cmd/goimports)
-- [godef](https://github.com/rogpeppe/godef)
-- [gometalinter](https://github.com/alecthomas/gometalinter)
-- [gorename](https://golang.org/x/tools/cmd/gorename)
-- [SublimeLinter](https://github.com/SublimeLinter/SublimeLinter3)
+- [gocode](https://github.com/nsf/gocode) `An autocompletion daemon for the Go programming language`
+- [guru](https://golang.org/x/tools/cmd/guru) `A tool for answering questions about Go source code`
+- [goimports](https://golang.org/x/tools/cmd/goimports) `Update your Go import lines, adding missing ones and removing unreferenced ones`
+- [godef](https://github.com/rogpeppe/godef) `Print where symbols are defined in Go source code`
+- [gometalinter](https://github.com/alecthomas/gometalinter) `Concurrently run Go lint tools and normalise their output`
+- [gorename](https://golang.org/x/tools/cmd/gorename) `Perform precise type-safe renaming of identifiers in Go source code`
+- [SublimeLinter](https://github.com/SublimeLinter/SublimeLinter3) `Interactive code linting framework for Sublime Text 3`
 
 ## License
 [MIT](LICENSE)
