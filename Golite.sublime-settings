@@ -1,10 +1,13 @@
 {
     "format_mode": "both", // ["goimports", "gofmt", "both"]
-    "godef_mode": "both", // ["godef", "guru", "both"]
     "format_on_save": true,
     "gofmt_simplified": false, // gofmt -s
+
+    "godef_mode": "both", // ["godef", "guru", "both"]
+
     "gocode_enabled": true,
     "gocode_inhibit_word_completions": true,
     "gocode_inhibit_explicit_completions": false,
-    "install_cmd_update_go_tools": false
+
+    "install_cmd_update_go_tools": false // go get -u
 }
