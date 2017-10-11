@@ -7,7 +7,7 @@ class Gometalinter(Linter):
     """Provides an interface to gometalinter."""
 
     defaults = {
-        'args': ['--fast'],
+        'args': ['--fast', '--aggregate'],
     }
     syntax = ('go')
     cmd = ['gometalinter', '*', '@']
