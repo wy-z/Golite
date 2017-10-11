@@ -3,6 +3,8 @@ import os
 from SublimeLinter.lint import Linter, util
 from SublimeLinter.lint.persist import settings
 
+from . import utils
+
 
 class Gometalinter(Linter):
     """Provides an interface to gometalinter."""
@@ -20,6 +22,10 @@ class Gometalinter(Linter):
 
         self.linting = False
         self.pre_code = ""
+
+        if not self.env:
+            self.env = {}
+        self.env.update(utils.get_env())
 
     def run(self, cmd, code):
         if self.linting and self.pre_code == code:
