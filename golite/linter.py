@@ -19,7 +19,6 @@ class Gometalinter(Linter):
         Linter.__init__(self, view, syntax)
 
         self._pre_code = ""
-        self._pre_result = ""
 
         if not self.env:
             self.env = {}
@@ -27,7 +26,8 @@ class Gometalinter(Linter):
 
     def run(self, cmd, code):
         if self._pre_code == code:
-            return self._pre_result
+            return
+        self._pre_code = code
 
         new_cmd = cmd + [
             os.path.dirname(self.filename), '-I',
@@ -35,7 +35,4 @@ class Gometalinter(Linter):
         ]
         result = util.communicate(
             new_cmd, output_stream=util.STREAM_STDOUT, env=self.env)
-
-        self._pre_code = code
-        self._pre_result = result
         return result
