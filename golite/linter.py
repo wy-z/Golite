@@ -18,17 +18,11 @@ class Gometalinter(Linter):
     def __init__(self, view, syntax):
         Linter.__init__(self, view, syntax)
 
-        self._pre_code = ""
-
         if not self.env:
             self.env = {}
         self.env.update(utils.get_env())
 
     def run(self, cmd, code):
-        if self._pre_code == code:
-            return
-        self._pre_code = code
-
         new_cmd = cmd + [
             os.path.dirname(self.filename), '-I',
             os.path.basename(self.filename)
