@@ -13,7 +13,9 @@ class Gometalinter(Linter):
     }
     syntax = ('go')
     cmd = ['gometalinter', '*']
-    regex = r'(?:[^:]+):(?P<line>\d+):(?P<col>\d+)?:(?:(?P<warning>warning)|(?P<error>error)):\s*(?P<message>.*)'
+    regex = (r'(?:[^:]+):(?P<line>\d+):(?P<col>\d+)?:(?:(?P<warning>warning)'
+             '|'
+             r'(?P<error>error)):\s*(?P<message>.*)')
 
     def __init__(self, view, syntax):
         Linter.__init__(self, view, syntax)
@@ -23,10 +25,10 @@ class Gometalinter(Linter):
         self.env.update(utils.get_env())
 
     def run(self, cmd, code):
-        new_cmd = cmd + [
+        cmd += [
             os.path.dirname(self.filename), '-I',
-            os.path.basename(self.filename)
+            '^%s' % os.path.relpath(self.filename, os.getcwd())
         ]
         result = util.communicate(
-            new_cmd, output_stream=util.STREAM_STDOUT, env=self.env)
+            cmd, output_stream=self.error_stream, env=self.env)
         return result
