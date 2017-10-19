@@ -52,7 +52,10 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
                         args.append("--update")
                     self.run_cmd(args, timeout=300)
         except Exception as e:
-            utils.prompt("[Golite] Failed to install go tools.\n%s" % e)
+            utils.prompt(
+                "Golite\n\n"
+                "Failed to install go tools, please view the console for more "
+                "details.")
             raise e
         print("[golite] go tools installed")
 
@@ -74,35 +77,36 @@ class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):
         self.doctor()
 
     def doctor(self):
-        msgs = []
+        msg_tmpl = ("[%s] Golang installed\n"
+                    "[%s] Go tools installed\n"
+                    "[%s] Sublimelinter installed")
 
         # check golang
-        msg = "[%s] Golang installed"
-        result = "√"
+        go_installed = True
         try:
             utils.which("go")
         except EnvironmentError:
-            result = "×"
-        msgs.append(msg % result)
+            go_installed = False
 
         # check go tools
-        msg = "[%s] Go tools installed"
-        result = "√"
+        go_tools_installed = True
         for tool in go_tools.keys():
             try:
                 utils.which(tool)
             except EnvironmentError:
-                result = "×"
+                go_tools_installed = False
                 break
-        msgs.append(msg % result)
 
         # check sublimelinter
-        msg = "[%s] Sublimelinter installed"
-        result = "√"
+        sublime_linter_installed = True
         try:
             import SublimeLinter.lint
         except ImportError:
-            result = "×"
-        msgs.append(msg % result)
+            sublime_linter_installed = False
 
-        utils.prompt('\n'.join(msgs))
+        msg = msg_tmpl % tuple([
+            "√" if b else "×"
+            for b in
+            [go_installed, go_tools_installed, sublime_linter_installed]
+        ])
+        utils.prompt(msg)
