@@ -152,9 +152,8 @@ class GocodeListener(sublime_plugin.EventListener):
             result.append([hint, subj])
 
         completion_flag = 0
-        if result:
-            if settings.get("gocode_inhibit_word_completions", True):
-                completion_flag |= sublime.INHIBIT_WORD_COMPLETIONS
-            if settings.get("gocode_inhibit_explicit_completions", False):
-                completion_flag |= sublime.INHIBIT_EXPLICIT_COMPLETIONS
+        if settings.get("gocode_inhibit_word_completions", True):
+            completion_flag |= sublime.INHIBIT_WORD_COMPLETIONS
+        if settings.get("gocode_inhibit_explicit_completions", False):
+            completion_flag |= sublime.INHIBIT_EXPLICIT_COMPLETIONS
         return (result, completion_flag)
