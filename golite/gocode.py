@@ -117,6 +117,14 @@ def hint_and_subj(cls, name, type):
 
 
 class GocodeListener(sublime_plugin.EventListener):
+    def check_set_trigger(self, view):
+        settings = view.settings()
+        triggers = settings.get("auto_complete_triggers", [])
+        trigger = {'selector': 'source.go', 'characters': '.'}
+        if trigger not in triggers:
+            triggers.append(trigger)
+        settings.set("auto_complete_triggers", triggers)
+
     def on_query_completions(self, view, prefix, locations):
         loc = locations[0]
         if not view.match_selector(loc, "source.go"):
@@ -124,6 +132,7 @@ class GocodeListener(sublime_plugin.EventListener):
         settings = sublime.load_settings("Golite.sublime-settings")
         if not settings.get("gocode_enabled", True):
             return
+        self.check_set_trigger(view)
 
         src = view.substr(sublime.Region(0, view.size()))
         filename = view.file_name()
