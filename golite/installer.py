@@ -61,7 +61,7 @@ class GoliteInstallCommand(sublime_plugin.ApplicationCommand):
 
     def run_cmd(self, args, timeout=60):
         print("[golite] running '%s'" % ' '.join(args))
-        subprocess.check_call(args, timeout=timeout)
+        subprocess.check_call(args, timeout=timeout, env=utils.get_env())
 
 
 class GoliteDoctorCommand(sublime_plugin.ApplicationCommand):

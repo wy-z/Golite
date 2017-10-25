@@ -117,6 +117,8 @@ def hint_and_subj(cls, name, type):
 
 
 class GocodeListener(sublime_plugin.EventListener):
+    _go_code_configured = False
+
     def check_set_trigger(self, view):
         settings = view.settings()
         triggers = settings.get("auto_complete_triggers", [])
@@ -124,6 +126,24 @@ class GocodeListener(sublime_plugin.EventListener):
         if trigger not in triggers:
             triggers.append(trigger)
         settings.set("auto_complete_triggers", triggers)
+
+    def check_set_gocode_configure(self):
+        if self._go_code_configured:
+            return
+        try:
+            subprocess.check_call(
+                ["gocode", "set", "propose-builtins", "true"],
+                timeout=60,
+                env=utils.get_env())
+            subprocess.check_call(
+                ["gocode", "set", "autobuild", "true"],
+                timeout=60,
+                env=utils.get_env())
+        except Exception as e:
+            print("[golite] failed to set gocode configure:\n%s" % e)
+        else:
+            print("[golite] gocode configured")
+        self._go_code_configured = True
 
     def on_query_completions(self, view, prefix, locations):
         loc = locations[0]
@@ -133,6 +153,7 @@ class GocodeListener(sublime_plugin.EventListener):
         if not settings.get("gocode_enabled", True):
             return
         self.check_set_trigger(view)
+        self.check_set_gocode_configure()
 
         src = view.substr(sublime.Region(0, view.size()))
         filename = view.file_name()
