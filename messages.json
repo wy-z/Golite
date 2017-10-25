@@ -1,4 +1,5 @@
 {
     "install": "README.md",
-    "0.2.7": "messages/0.2.7.md"
+    "0.2.7": "messages/0.2.7.md",
+    "0.2.9": "messages/0.2.9.md"
 }
